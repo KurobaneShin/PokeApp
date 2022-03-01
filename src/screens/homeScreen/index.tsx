@@ -1,7 +1,13 @@
 import React from 'react';
 import Api from '../../services/api';
 import {useState, useEffect} from 'react';
-import {SafeAreaView, FlatList, Text, TouchableOpacity} from 'react-native';
+import {
+  SafeAreaView,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../types/RootStackParamList';
 
@@ -11,9 +17,13 @@ const Home = () => {
   const [pokemonList, setPokemonList] = useState<any>([]);
 
   const fetchPokemonList = async () => {
-    let response = await Api.getPokemons();
-    if (response) {
-      setPokemonList(response.results);
+    try {
+      let response = await Api.getPokemons();
+      if (response) {
+        setPokemonList(response.results);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -22,18 +32,32 @@ const Home = () => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <FlatList
         data={pokemonList}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => navigation.navigate('Details', {link: item.url})}>
-            <Text>{item.name}</Text>
+            <Text style={styles.item}>{item.name}</Text>
           </TouchableOpacity>
         )}
       />
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  item: {
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+});
 
 export default Home;
