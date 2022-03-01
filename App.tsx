@@ -1,39 +1,18 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React from 'react';
-import Api from './src/services/api';
-import {useState, useEffect} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {LogBox} from 'react-native';
 
-import {SafeAreaView, FlatList, Text} from 'react-native';
+import MainStack from './src/stacks/mainStack';
 
 const App = () => {
-  const [pokemonList, setPokemonList] = useState<any>([]);
-  const teste = async () => {
-    let response = await Api.getPokemons();
-    if (response) {
-      setPokemonList(response.results);
-    }
-  };
-
-  useEffect(() => {
-    teste();
-  }, []);
+  LogBox.ignoreLogs([
+    "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+  ]);
 
   return (
-    <SafeAreaView>
-      <FlatList
-        data={pokemonList}
-        renderItem={({item}) => <Text>{item.name}</Text>}
-      />
-    </SafeAreaView>
+    <NavigationContainer>
+      <MainStack />
+    </NavigationContainer>
   );
 };
 

@@ -1,13 +1,16 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/pokemon',
   headers: {Accept: 'application/json'},
 });
 
 export default {
   getPokemons: async () => {
-    let {data: json} = await api.get('');
+    let {data: json} = await api.get('https://pokeapi.co/api/v2/pokemon');
+    return json;
+  },
+  getPokemonDetails: async (link: String) => {
+    let {data: json} = await api.get(`${link}`);
     return json;
   },
 };
