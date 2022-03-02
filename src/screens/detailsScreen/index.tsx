@@ -18,7 +18,7 @@ const Details = () => {
   const link = route.params.link;
 
   const fetchPokemonDetails = async () => {
-    let response = await api.getPokemonDetails(link);
+    let response = await api.getPokemons(link);
     if (response) {
       setPokemon(response);
     }

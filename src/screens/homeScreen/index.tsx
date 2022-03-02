@@ -21,7 +21,7 @@ const Home = () => {
 
   const fetchPokemonList = async () => {
     try {
-      let response = await Api.getPokemons();
+      let response = await Api.getPokemons('https://pokeapi.co/api/v2/pokemon');
       if (response) {
         setPokemonList(response.results);
         setNextPageUrl(response.next);
@@ -34,7 +34,7 @@ const Home = () => {
 
   const handleNextButton = async () => {
     try {
-      let response = await Api.getPokemonDetails(nextPageUrl);
+      let response = await Api.getPokemons(nextPageUrl);
       if (response) {
         setPokemonList(response.results);
         setPreviousPageUrl(response.previous);
@@ -47,7 +47,7 @@ const Home = () => {
 
   const handlePreviousButton = async () => {
     try {
-      let response = await Api.getPokemonDetails(previousPageUrl);
+      let response = await Api.getPokemons(previousPageUrl);
       if (response) {
         setPokemonList(response.results);
         setPreviousPageUrl(response.previous);
@@ -75,10 +75,10 @@ const Home = () => {
       />
       <View style={styles.row}>
         <TouchableOpacity onPress={() => handlePreviousButton()}>
-          <Text>Teste</Text>
+          <Text>Previous</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleNextButton()}>
-          <Text>Teste</Text>
+          <Text>Next</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
