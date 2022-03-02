@@ -10,6 +10,7 @@ export default {
     return json;
   },
   getPokemonDetails: async (link: String) => {
+    console.log(link);
     let {data: json} = await api.get(`${link}`);
     return json;
   },
